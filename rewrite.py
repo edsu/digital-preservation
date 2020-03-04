@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
+import re
+import os
 from pathlib import Path
-from bs4 import BeautifulSoup
 
-plans = Path('site/plans')
+plans = Path('plans')
 for plan in plans.iterdir():
-    if plan.name.endswith('_.html'): 
-        continue
-    doc = BeautifulSoup(plan.open(), 'lxml')
-    html = doc.prettify()
-    new_f = plans / plan.name.replace('.html', '_.html')
-    new_f.open('w').write(html)
+    if plan.name.endswith('_.html'):
+        path = str(plan)
+        new_path = re.sub('_.html$', '.html', path)
+        print(path, new_path)
+        os.rename(path, new_path)
